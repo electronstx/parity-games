@@ -6,6 +6,7 @@
         "useIgnoreFile": false
     },
     "files": {
+        "include": ["games/**/*", "packages/**/*"],
         "ignoreUnknown": false
     },
     "formatter": {
