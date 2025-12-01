@@ -2,6 +2,8 @@ import { GameAnimation, GameEvents } from '@parity-games/core';
 import gsap from 'gsap';
 import RpsScene from '../rps-scene';
 import * as PIXI from 'pixi.js';
+import { playClickSound, playEndGameSound } from '../../sounds';
+import { isGameResult } from '../../utils/guards';
 
 export class EndGameAnimation implements GameAnimation {
 	#scene: RpsScene;
@@ -23,7 +25,8 @@ export class EndGameAnimation implements GameAnimation {
         this.#endPanelBack.cursor = 'pointer';
         this.#endPanelBack.on('pointerdown', () => {
             this.reset();
-            this.#scene.app.stage.emit(GameEvents.GAME_STARTED);
+			playClickSound();
+            this.#scene.app.stage.emit(GameEvents.GAME_RESTARTED);
         });
         this.#scene.addChild(this.#endPanelBack);
 
@@ -31,7 +34,7 @@ export class EndGameAnimation implements GameAnimation {
 
 		const textStyle = new PIXI.TextStyle({
 			fontFamily: 'Arial',
-			fontSize: 80 * scale,
+			fontSize: 60 * scale,
 			fill: 'white',
 			align: 'center',
 			stroke: {
@@ -73,10 +76,12 @@ export class EndGameAnimation implements GameAnimation {
 		this.reset();
 		this.display();
 
-        if (!this.#end || !this.#endText) return;
+        if (!this.#end || !this.#endText || !isGameResult(text)) return;
+
+		playEndGameSound(text);
 
 		this.#end.visible = true;
-		this.#endText.text = text;	
+		this.#endText.text = `${text}\nClick on the screen to restart the game!`;
 
 		this.#end.scale.set(1);
 		this.#end.alpha = 1;

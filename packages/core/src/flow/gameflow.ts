@@ -36,8 +36,11 @@ export default abstract class Gameflow {
         this.showEndGame(result, timescale);
     }
 
+    protected onEnterRestart(): void {
+        this.restartGame();
+    }
+
     #enterState(stateName: GameStateName, ...args: any[]): void {
-        console.log(`CURRENT GAMESTATE: ${stateName}`);
         switch (stateName) {
             case GameStates.INIT:
                 this.onEnterInit();
@@ -53,6 +56,9 @@ export default abstract class Gameflow {
                 break;
             case GameStates.END:
                 this.onEnterEnd(args[0], args[1]);
+                break;
+            case GameStates.RESTART:
+                this.onEnterRestart();
                 break;
         }
     }
@@ -83,6 +89,11 @@ export default abstract class Gameflow {
         };
         this.#subscribe(GameEvents.GAME_END, gameEndHandler);
 
+        const gameRestartedHandler = () => {
+            this.#changeState(GameStates.RESTART);
+        };
+        this.#subscribe(GameEvents.GAME_RESTARTED, gameRestartedHandler);
+
         this.setupCustomEventHandlers();
     }
 
@@ -106,4 +117,5 @@ export default abstract class Gameflow {
     abstract startRound(roundNumber: number): void;
     abstract showRoundResult(...args: any[]): void;
     abstract showEndGame(result: any, timescale?: number): void;
+    abstract restartGame(): void;
 }

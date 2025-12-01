@@ -13,7 +13,7 @@ export class Round implements HUDComponent {
     create(scale: number): void {
 		const textStyle = new PIXI.TextStyle({
 			fontFamily: 'Arial',
-			fontSize: 80 * scale,
+			fontSize: 50 * scale,
 			fill: 'white',
 			align: 'center',
 			stroke: {
@@ -24,7 +24,7 @@ export class Round implements HUDComponent {
 
         this.#roundText = new PIXI.Text({ text: 'ROUND 1', style: textStyle });
         this.#roundText.anchor.set(0.5);
-        this.#roundText.position.set(this.#scene.app.renderer.width / 2, this.#scene.app.renderer.height - 100 * scale);
+        this.#roundText.position.set(this.#scene.app.renderer.width / 2, this.#scene.app.renderer.height - 50 * scale);
         this.#roundText.visible = false;
         this.#scene.addChild(this.#roundText);
     }

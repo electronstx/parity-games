@@ -3,5 +3,6 @@ export type RoundResultData = {
     opponentMove: string, 
     playerScore: number, 
     opponentScore: number,
+    roundWinner: 'player' | 'opponent' | 'tie',
     result: string | null
 }

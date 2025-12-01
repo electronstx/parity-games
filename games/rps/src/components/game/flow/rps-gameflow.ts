@@ -28,6 +28,11 @@ export default class RpsGameflow extends Gameflow{
         this.scene.showEndGame(result);
     }
 
+    override restartGame(): void {
+        this.gameData.resetData();
+        this.scene.restartGame();
+    }
+
     protected override setupCustomEventHandlers(): void {
         const animationCompletedHandler = (roundResultData: unknown) => {
             if (!isRoundResultData(roundResultData)) return;

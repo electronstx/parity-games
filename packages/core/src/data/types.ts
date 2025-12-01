@@ -1,4 +1,4 @@
-export type GameStateName = 'init' | 'start' | 'round' | 'round-result' | 'end';
+export type GameStateName = 'init' | 'start' | 'round' | 'round-result' | 'end' | 'restart';
 
 export const GameStates = {
     INIT: 'init',
@@ -6,6 +6,7 @@ export const GameStates = {
     ROUND: 'round',
     ROUND_RESULT: 'round-result',
     END: 'end',
+    RESTART: 'restart'
 } as const;
 
 export type GameState = {

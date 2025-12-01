@@ -31,13 +31,14 @@ export default class RpsGameData extends GameData {
         const moves = ['rock', 'paper', 'scissors'];
         const opponentMove = moves[Math.floor(Math.random() * moves.length)];
 
-        this.checkRoundResult(this.#playerMove, opponentMove);
+        const roundWinner = this.checkRoundResult(this.#playerMove, opponentMove);
 
         return {
             playerMove: this.#playerMove, 
             opponentMove: opponentMove, 
             playerScore: this.#playerScore, 
             opponentScore: this.#opponentScore, 
+            roundWinner: roundWinner,
             result: this.checkEndGame() 
         };
     }
@@ -48,18 +49,23 @@ export default class RpsGameData extends GameData {
         this.#roundNumber = 1;
     }
 
-    checkRoundResult(playerMove: string, opponentMove: string): void {
-        if (playerMove === opponentMove) return;
-
+    checkRoundResult(playerMove: string, opponentMove: string): 'player' | 'opponent' | 'tie' {
+        if (playerMove === opponentMove) {
+            this.#roundNumber++;
+            return 'tie';
+        }
+    
         if ((playerMove === 'rock' && opponentMove === 'scissors')
             || (playerMove === 'scissors' && opponentMove === 'paper')
             || (playerMove === 'paper' && opponentMove === 'rock')) {
             this.#playerScore++;
+            this.#roundNumber++;
+            return 'player';
         } else {
             this.#opponentScore++;
+            this.#roundNumber++;
+            return 'opponent';
         }
-
-        this.#roundNumber++;
     }
 
     checkEndGame(): string | null {

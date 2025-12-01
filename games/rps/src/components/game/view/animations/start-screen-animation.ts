@@ -2,6 +2,7 @@ import { GameAnimation, GameEvents } from '@parity-games/core';
 import gsap from 'gsap';
 import RpsScene from '../rps-scene';
 import * as PIXI from 'pixi.js';
+import { playClickSound } from '../../sounds';
 
 export class StartScreenAnimation implements GameAnimation {
 	#scene: RpsScene;
@@ -23,6 +24,7 @@ export class StartScreenAnimation implements GameAnimation {
         this.#startPanelBack.cursor = 'pointer';
         this.#startPanelBack.on('pointerdown', () => {
             this.reset();
+			playClickSound();
             this.#scene.app.stage.emit(GameEvents.GAME_STARTED);
         });
         this.#scene.addChild(this.#startPanelBack);

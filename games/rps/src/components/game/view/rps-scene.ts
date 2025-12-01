@@ -42,7 +42,6 @@ export default class RpsScene extends Scene {
 		this.#updateBackgroundSize();
         this.addChild(this.#bg);
 
-        //ToDo Создать анимации и компоненты для HUD и добавить их
         this.#startScreenAnimation.create(this.gameScale);
         this.#roundAnimation.create(this.gameScale);
         this.#endGameAnimation.create(this.gameScale);
@@ -91,7 +90,7 @@ export default class RpsScene extends Scene {
 
         setTimeout(() => {
             this.#choicePanel.show();
-        }, 1000);
+        }, 2000);
     }
 
     override showRoundResult(roundResultData: RoundResultData): void {
@@ -105,6 +104,6 @@ export default class RpsScene extends Scene {
     }
 
     override restartGame(): void {
-        console.log('Restarting game!');
+        this.app.stage.emit(GameEvents.GAME_STARTED);
     }
 }

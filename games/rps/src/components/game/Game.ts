@@ -1,4 +1,4 @@
-import { Application, Rectangle } from 'pixi.js';
+import { Application } from 'pixi.js';
 import RpsScene from './view/rps-scene.js';
 import RpsGameData from './data/rps-game-data.js';
 import RpsGameflow from './flow/rps-gameflow.js';
@@ -6,6 +6,7 @@ import { RpsGameSettings } from './types.js';
 import { ScaleManager } from "./utils/scale.js";
 import { GameStates } from '@parity-games/core';
 import { getAssets } from './assets-manifest.js';
+import { initGameSounds } from './sounds.js';
 
 export class Game {
 	#app!: Application;
@@ -32,6 +33,8 @@ export class Game {
 			});
 
 			await getAssets();
+
+			initGameSounds();
 
 			this.#scaleManager = new ScaleManager(this.#app, parent, 1280, 768, 'contain');
 

@@ -1,14 +1,18 @@
 import { GameAnimation } from "@parity-games/core";
+import gsap from 'gsap';
 import RpsScene from "../rps-scene";
 import * as PIXI from 'pixi.js';
-import { isRoundResultData, isRpsMove } from "../../utils/guards";
+import { isRoundResultData } from "../../utils/guards";
 import { RoundResultData } from "../../data/types";
+import { playFlashSound } from "../../sounds";
 
 export class RoundAnimation implements GameAnimation {
     #scene: RpsScene;
     #scale?: number;
     #playerCard?: PIXI.Sprite;
     #opponentCard?: PIXI.Sprite;
+    #screenFlash?: PIXI.Graphics;
+    #shakeTweens?: gsap.core.Timeline[];
 
     constructor(scene: RpsScene) {
         this.#scene = scene;
@@ -33,6 +37,13 @@ export class RoundAnimation implements GameAnimation {
         this.#opponentCard.position.set(this.#scene.app.renderer.width - offsetX, halfH);
         this.#opponentCard.visible = false;
         this.#scene.addChild(this.#opponentCard);
+
+        this.#screenFlash = new PIXI.Graphics();
+        this.#screenFlash.rect(0, 0, this.#scene.app.renderer.width, this.#scene.app.renderer.height)
+            .fill({ color: 0xFFFFFF, alpha: 1 });
+        this.#screenFlash.alpha = 0;
+        this.#screenFlash.visible = false;
+        this.#scene.addChild(this.#screenFlash);
     }
 
     display(): void {
@@ -44,14 +55,157 @@ export class RoundAnimation implements GameAnimation {
         if (!this.#playerCard || !this.#opponentCard) return;
         if (!this.#scale) return;
 
+        if (this.#shakeTweens) {
+            this.#shakeTweens.forEach(tween => tween.kill());
+            this.#shakeTweens = undefined;
+        }
+
+        this.#playerCard.tint = 0xFFFFFF;
+        this.#opponentCard.tint = 0xFFFFFF;
+        
+        this.#playerCard.alpha = 1;
+        this.#opponentCard.alpha = 1;
+
         this.#playerCard.texture = PIXI.Texture.from('cardBack');
         this.#opponentCard.texture = PIXI.Texture.from('cardBack');
             
         this.#playerCard.scale.set(0.5 * this.#scale);
         this.#opponentCard.scale.set(0.5 * this.#scale);  
 
+        const halfH = this.#scene.app.renderer.height / 2;
+        const offsetX = 200 * this.#scale;
+        this.#playerCard.position.set(offsetX, halfH);
+        this.#opponentCard.position.set(this.#scene.app.renderer.width - offsetX, halfH);
+
         this.#playerCard.visible = false;
         this.#opponentCard.visible = false;
+
+        if (this.#screenFlash) {
+            this.#screenFlash.visible = false;
+            this.#screenFlash.alpha = 0;
+        }
+    }
+
+    #playShakeAnimation(card: PIXI.Sprite, duration: number = 0.5): void {
+        if (!card) return;
+
+        const originalX = card.x;
+        const originalY = card.y;
+        const shakeIntensity = 10;
+        const shakeDuration = duration;
+        const shakeCount = Math.round(16 * duration);
+
+        const shakeTimeline = gsap.timeline();
+        
+        for (let i = 0; i < shakeCount; i++) {
+            const randomX = originalX + (Math.random() - 0.5) * shakeIntensity * 2;
+            const randomY = originalY + (Math.random() - 0.5) * shakeIntensity * 2;
+            
+            shakeTimeline.to(card.position, {
+                x: randomX,
+                y: randomY,
+                duration: shakeDuration / shakeCount,
+                ease: "power1.out"
+            });
+        }
+
+        shakeTimeline.to(card.position, {
+            x: originalX,
+            y: originalY,
+            duration: 0.1,
+            ease: "power1.out"
+        });
+
+        if (!this.#shakeTweens) {
+            this.#shakeTweens = [];
+        }
+        this.#shakeTweens.push(shakeTimeline);
+    }
+
+    #playFlashAnimation(delay: number = 0): void {
+        if (!this.#screenFlash) return;
+
+        const flashTimeline = gsap.timeline({ delay });
+
+        flashTimeline.call(() => {
+            if (this.#screenFlash) {
+                this.#screenFlash.visible = true;
+                this.#screenFlash.alpha = 0;
+                playFlashSound();
+            }
+        });
+
+        flashTimeline.to(this.#screenFlash, {
+            alpha: 0.8,
+            duration: 0.1,
+            ease: "power2.out"
+        });
+
+        flashTimeline.to(this.#screenFlash, {
+            alpha: 0,
+            duration: 0.2,
+            ease: "power2.in",
+            onComplete: () => {
+                if (this.#screenFlash) {
+                    this.#screenFlash.visible = false;
+                }
+            }
+        });
+
+        if (!this.#shakeTweens) {
+            this.#shakeTweens = [];
+        }
+        this.#shakeTweens.push(flashTimeline);
+    }
+
+    #playVictoryAnimation(winner: 'player' | 'opponent' | 'tie'): void {
+        if (!this.#playerCard || !this.#opponentCard || !this.#scale) return;
+    
+        const centerX = this.#scene.app.renderer.width / 2;
+        const offsetX = 200 * this.#scale;
+        
+        const victoryTimeline = gsap.timeline({ delay: 0.3 });
+        
+        if (winner === 'player') {
+            victoryTimeline.to(this.#playerCard, {
+                scale: 1.2 * this.#scale,
+                x: centerX,
+                duration: 0.5,
+                ease: "back.out(1.7)"
+            }, 0);
+            
+            victoryTimeline.to(this.#opponentCard, {
+                scale: 0.4 * this.#scale,
+                alpha: 0.5,
+                x: this.#scene.app.renderer.width - offsetX,
+                duration: 0.5,
+                ease: "power2.in"
+            }, 0);
+            
+            this.#opponentCard.tint = 0xCCCCCC;   
+        } else if (winner === 'opponent') {
+            victoryTimeline.to(this.#opponentCard, {
+                scale: 1.2 * this.#scale,
+                x: centerX,
+                duration: 0.5,
+                ease: "back.out(1.7)"
+            }, 0);
+            
+            victoryTimeline.to(this.#playerCard, {
+                scale: 0.4 * this.#scale,
+                alpha: 0.5,
+                x: offsetX,
+                duration: 0.5,
+                ease: "power2.in"
+            }, 0);
+            
+            this.#playerCard.tint = 0xCCCCCC;
+        }
+        
+        if (!this.#shakeTweens) {
+            this.#shakeTweens = [];
+        }
+        this.#shakeTweens.push(victoryTimeline);
     }
 
     show(roundResultData: RoundResultData): void {
@@ -59,6 +213,13 @@ export class RoundAnimation implements GameAnimation {
         this.display();
 
         if (!isRoundResultData(roundResultData)) return;
+
+        if (!this.#playerCard || !this.#opponentCard || !this.#screenFlash) return;
+
+        this.#playShakeAnimation(this.#playerCard, 1.5);
+        this.#playShakeAnimation(this.#opponentCard, 1.5);
+
+        this.#playFlashAnimation(1.5);
 
         setTimeout(() => {
             if (!this.#playerCard || !this.#opponentCard) return;
@@ -69,12 +230,14 @@ export class RoundAnimation implements GameAnimation {
             if (!this.#scale) return; 
             
             this.#playerCard.scale.set(0.8 * this.#scale);
-            this.#opponentCard.scale.set(0.8 * this.#scale);           
-        }, 5000);
+            this.#opponentCard.scale.set(0.8 * this.#scale);  
+
+            this.#playVictoryAnimation(roundResultData.roundWinner);
+        }, 1500);
 
         setTimeout(() => {
             this.#scene.app.stage.emit('ANIMATION_COMPLETED', roundResultData);
             this.reset();
-        }, 6000);
+        }, 5000);
     }
 }

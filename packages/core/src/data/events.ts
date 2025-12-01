@@ -26,17 +26,24 @@ export type GameEndEvent = {
     };
 }
 
+export type GameRestartedEvent = {
+    type: 'GAME_RESTARTED';
+    payload?: undefined;
+}
+
 export type GameEvent =
     | GameStartedEvent
     | RoundStartedEvent
     | RoundCompletedEvent
-    | GameEndEvent;
+    | GameEndEvent
+    | GameRestartedEvent;
 
 export const GameEvents = {
     GAME_STARTED: 'GAME_STARTED',
     ROUND_STARTED: 'ROUND_STARTED',
     ROUND_COMPLETED: 'ROUND_COMPLETED',
-    GAME_END: 'GAME_END'
+    GAME_END: 'GAME_END',
+    GAME_RESTARTED: 'GAME_RESTARTED'
 } as const;
 
 export type GameEventType = typeof GameEvents[keyof typeof GameEvents];

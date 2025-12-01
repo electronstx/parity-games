@@ -8,6 +8,7 @@ export type {
     RoundStartedEvent,
     RoundCompletedEvent,
     GameEndEvent,
+    GameRestartedEvent,
     GameEvent,
     GameEventType
 } from './data/events.js';
@@ -22,3 +23,7 @@ export { HUD } from './view/hud/hud.js';
 export type { HUDComponent } from './view/hud/types.js';
 export { AnimationManager } from './view/animations/animation-manager.js';
 export type { GameAnimation } from './view/animations/types.js';
+
+// Services
+export { soundService } from './services/sound/sound-service.js';
+export type { SoundSettingsState } from './services/sound/types.js';

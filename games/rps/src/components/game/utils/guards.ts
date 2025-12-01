@@ -19,6 +19,11 @@ export function isRoundResultData(value: unknown): value is RoundResultData {
         Number.isInteger(data.opponentScore) &&
         data.playerScore >= 0 &&
         data.opponentScore >= 0 &&
+        (data.roundWinner === 'player' || data.roundWinner === 'opponent' || data.roundWinner === 'tie') &&
         (typeof data.result === 'string' || data.result === null)
     );
+}
+
+export function isGameResult(value: unknown): value is 'Player wins!' | 'Opponent wins!' {
+    return typeof value === 'string' && (value === 'Player wins!' || value === 'Opponent wins!');
 }

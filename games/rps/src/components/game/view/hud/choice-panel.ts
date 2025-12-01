@@ -2,6 +2,7 @@ import { ChoiceConfig } from './types';
 import { GameEvents, HUDComponent } from "@parity-games/core";
 import RpsScene from "../rps-scene";
 import * as PIXI from 'pixi.js';
+import { playClickSound, playHoverSound } from '../../sounds';
 
 export class ChoicePanel implements HUDComponent {
     #scene: RpsScene;
@@ -33,12 +34,21 @@ export class ChoicePanel implements HUDComponent {
             choice.anchor.set(0.5);
             choice.x = config.offsetX * scale;
             choice.scale.set(0.8 * scale);
+            choice.tint = 0xEEEEEE;
 
             choice.eventMode = 'static';
             choice.cursor = 'pointer';
             choice.on('pointerdown', () => {
                 this.hide();
+                playClickSound();
                 this.#scene.app.stage.emit(GameEvents.ROUND_COMPLETED, config.name);
+            });
+            choice.on('pointerenter', () => {
+                playHoverSound();
+                choice.tint = 0xFFFFFF;
+            });
+            choice.on('pointerleave', () => {
+                choice.tint = 0xEEEEEE;
             });
 
             this.#choicePanel?.addChild(choice);
