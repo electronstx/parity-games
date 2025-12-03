@@ -1,5 +1,5 @@
 import { RoundResultData } from '../data/types';
-import { RpsMove } from '../types';
+import { RpsGameSettings, RpsMove } from '../types';
 
 export function isRpsMove(value: unknown): value is RpsMove {
     return typeof value === 'string' && (value === 'rock' || value === 'paper' || value === 'scissors');
@@ -26,4 +26,16 @@ export function isRoundResultData(value: unknown): value is RoundResultData {
 
 export function isGameResult(value: unknown): value is 'Player wins!' | 'Opponent wins!' {
     return typeof value === 'string' && (value === 'Player wins!' || value === 'Opponent wins!');
+}
+
+export function isRpsGameSettings(value: unknown): value is RpsGameSettings {
+    if (!value || typeof value !== 'object') return false;
+    
+    const settings = value as Record<string, unknown>;
+    
+    return (
+        typeof settings.bestOf === 'number' &&
+        Number.isInteger(settings.bestOf) &&
+        settings.bestOf > 0
+    );
 }

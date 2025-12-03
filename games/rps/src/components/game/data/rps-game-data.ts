@@ -7,8 +7,8 @@ export default class RpsGameData extends GameData {
     #roundNumber: number = 1;
     #playerMove?: string;
 
-    constructor(gameSettings: any, initialState: GameStateName) {
-        super(gameSettings, initialState);
+    constructor(initialState: GameStateName) {
+        super(initialState);
     }
 
     setPlayerMove(playerMove: string): void {

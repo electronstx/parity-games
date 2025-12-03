@@ -70,7 +70,7 @@ export default class RpsScene extends Scene {
     }
 
     override showStartScreen(): void {
-        this.animationManager.show(this.#startScreenAnimation, 'Click on the screen to start the game!');
+        this.animationManager.show(this.#startScreenAnimation, 'Choose number of rounds\n and start the game!');
     }
 
     override initHUD(playerScore: number, opponentScore: number): void {
@@ -79,6 +79,7 @@ export default class RpsScene extends Scene {
     }
 
     override showStartGame(): void {
+        this.animationManager.reset();
         this.app.stage.emit(GameEvents.ROUND_STARTED);
     }
 

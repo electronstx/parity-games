@@ -5,6 +5,5 @@ export type Game = {
 
 export type GameContainerProps = {
     createGame: () => Game;
-    className?: string;
     onError?: (error: Error) => void;
 }

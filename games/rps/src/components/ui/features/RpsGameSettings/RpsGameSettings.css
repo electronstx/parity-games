@@ -1,0 +1,18 @@
+.rps-game-settings label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.rps-game-settings label > span {
+    text-align: center;
+    width: 100%;
+}
+
+.rps-game-settings .game-button-group {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}

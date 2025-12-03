@@ -1,2 +1,8 @@
-export { GameContainer } from './GameContainer.js';
-export type { Game } from './types.js';
+export { CreateForm } from './features/CreateForm/CreateForm.js';
+export { FooterPanel } from './features/FooterPanel/FooterPanel.js';
+export { HeaderPanel } from './features/HeaderPanel/HeaderPanel.js';
+export { GameContainer } from './features/GameContainer/GameContainer.js';
+export type { Game } from './features/GameContainer/types.js';
+
+export { Button } from './shared/Button/Button.js';
+export { ButtonGroup } from './shared/ButtonGroup/ButtonGroup.js';

@@ -1,3 +1,5 @@
+@import '@parity-games/ui/style.css';
+
 * {
     margin: 0;
     padding: 0;
@@ -10,30 +12,12 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
 }
     
 #root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.game-wrapper {
-    width: 1280px;
-    height: 768px;
-    border: 1px solid #333;
+    width: 100vw;
+    height: 100vh;
     position: relative;
-}
-
-.game-wrapper canvas {
-    display: block;
-    pointer-events: auto !important;
+    overflow: hidden;
 }

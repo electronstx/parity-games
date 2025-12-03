@@ -170,6 +170,7 @@ export class RoundAnimation implements GameAnimation {
             victoryTimeline.to(this.#playerCard, {
                 scale: 1.2 * this.#scale,
                 x: centerX,
+                alpha: 1,
                 duration: 0.5,
                 ease: "back.out(1.7)"
             }, 0);
@@ -187,6 +188,7 @@ export class RoundAnimation implements GameAnimation {
             victoryTimeline.to(this.#opponentCard, {
                 scale: 1.2 * this.#scale,
                 x: centerX,
+                alpha: 1,
                 duration: 0.5,
                 ease: "back.out(1.7)"
             }, 0);

@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import type { Game, GameContainerProps } from './types.js';
+import './GameContainer.css';
 
 export const GameContainer = (props: GameContainerProps) => {
     const gameRef = useRef<Game | null>(null);
@@ -33,10 +34,10 @@ export const GameContainer = (props: GameContainerProps) => {
     }, []);
 
     return (
-        <div className={`game-container-${props.className}`}>
+        <div className={`game-container`}>
             <div 
                 ref={containerRef} 
-                className="game-wrapper"
+                className="game-canvas"
             />
         </div>
     );

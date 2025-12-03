@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RpsGameContainer } from './RpsGameContainer';
+import { RpsGamePage } from './RpsGamePage';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RpsGameContainer />
+        <RpsGamePage />
     </React.StrictMode>
 );

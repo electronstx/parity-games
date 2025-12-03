@@ -5,13 +5,17 @@ export default abstract class GameData {
     protected currentState: GameStateName;
     protected stateHistory: GameState[] = [];
 
-    constructor(gameSettings: any, initialState: GameStateName = GameStates.INIT) {
-        this.gameSettings = gameSettings;
+    constructor(initialState: GameStateName = GameStates.INIT) {
+        this.gameSettings = {};
         this.currentState = initialState;
         this.stateHistory.push({
             name: initialState,
             enteredAt: Date.now(),
         });
+    }
+
+    setGameSettings(settings: any): void {
+        this.gameSettings = settings;
     }
 
     getCurrentState(): GameStateName {

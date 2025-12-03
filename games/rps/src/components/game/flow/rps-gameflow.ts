@@ -1,10 +1,16 @@
-import { Gameflow, GameData, Scene } from "@parity-games/core";
+import { Gameflow, GameData, Scene, GameEvents } from "@parity-games/core";
 import RpsGameData from "../data/rps-game-data";
-import { isRoundResultData } from "../utils/guards";
+import { isRoundResultData, isRpsGameSettings } from "../utils/guards";
 
 export default class RpsGameflow extends Gameflow{
     constructor(gameData: GameData, scene: Scene) {
         super(gameData, scene);
+    }
+
+    override setGameSettings(gameSettings: any): void {
+        if (isRpsGameSettings(gameSettings)) {
+            this.gameData.setGameSettings(gameSettings);
+        }
     }
 
     override startGame(): void {
@@ -38,11 +44,11 @@ export default class RpsGameflow extends Gameflow{
             if (!isRoundResultData(roundResultData)) return;
 
             if (roundResultData.result) {
-                this.scene.app.stage.emit('GAME_END', roundResultData.result);
+                this.scene.app.stage.emit(GameEvents.GAME_END, roundResultData.result);
                 return;
             }
 
-            this.scene.app.stage.emit('ROUND_STARTED');
+            this.scene.app.stage.emit(GameEvents.ROUND_STARTED);
         };
 
         this.scene.app.stage.on('ANIMATION_COMPLETED', animationCompletedHandler);

@@ -2,12 +2,12 @@ import { Application } from 'pixi.js';
 import RpsScene from './view/rps-scene.js';
 import RpsGameData from './data/rps-game-data.js';
 import RpsGameflow from './flow/rps-gameflow.js';
-import { RpsGameSettings } from './types.js';
 import { ScaleManager } from "./utils/scale.js";
-import { GameStates, soundService } from '@parity-games/core';
+import { GameEvents, GameStates, soundService } from '@parity-games/core';
 import { getAssets } from './assets-manifest.js';
 import { initGameSounds } from './sounds.js';
 import { Game } from '@parity-games/ui';
+import { RpsGameSettings } from './types.js';
 
 export class RpsGame implements Game {
 	#app!: Application;
@@ -50,8 +50,7 @@ export class RpsGame implements Game {
 				this.#app.ticker.start();
 			}
 
-			const gameSettings: RpsGameSettings = { bestOf: 5};
-			this.#gameData = new RpsGameData(gameSettings, GameStates.INIT);
+			this.#gameData = new RpsGameData(GameStates.INIT);
 
 			this.#gameflow = new RpsGameflow(this.#gameData, this.#gameScene);
 
@@ -72,6 +71,15 @@ export class RpsGame implements Game {
 
 	get whenReady(): Promise<RpsScene> {
 		return this.#sceneReady;
+	}
+
+	async setGameSettings(settings: RpsGameSettings): Promise<void> {
+		await this.whenReady;
+		this.#gameflow.setGameSettings(settings);
+	}
+	
+	async startGame(): Promise<void> {
+		await this.emit(GameEvents.GAME_STARTED);
 	}
 
 	async emit(event: string, payload?: unknown) {

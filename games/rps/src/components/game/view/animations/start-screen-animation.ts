@@ -20,13 +20,6 @@ export class StartScreenAnimation implements GameAnimation {
         this.#startPanelBack.rect(0, 0, this.#scene.app.renderer.width, this.#scene.app.renderer.height)
             .fill({ color: 0x000000, alpha: 0.8 });
         this.#startPanelBack.visible = false;
-        this.#startPanelBack.eventMode = 'static';
-        this.#startPanelBack.cursor = 'pointer';
-        this.#startPanelBack.on('pointerdown', () => {
-            this.reset();
-			playClickSound();
-            this.#scene.app.stage.emit(GameEvents.GAME_STARTED);
-        });
         this.#scene.addChild(this.#startPanelBack);
 
 		this.#start = new PIXI.Container();
