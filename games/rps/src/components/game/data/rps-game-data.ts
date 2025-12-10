@@ -15,7 +15,7 @@ export default class RpsGameData extends GameData {
         this.#playerMove = playerMove;
     }
 
-    override getGameSettingsData(): { playerScore: number, opponentScore: number } {
+    override getGameData(): { playerScore: number, opponentScore: number } {
         return { playerScore: this.#playerScore, opponentScore: this.#opponentScore };
     }
 

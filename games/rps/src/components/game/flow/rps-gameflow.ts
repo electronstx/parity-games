@@ -14,8 +14,8 @@ export default class RpsGameflow extends Gameflow{
     }
 
     override startGame(): void {
-        const gameSettings = this.gameData.getGameSettingsData();
-        this.scene.initHUD(gameSettings.playerScore, gameSettings.opponentScore);
+        const gData = this.gameData.getGameData();
+        this.scene.initHUD(gData.playerScore, gData.opponentScore);
         this.scene.showStartGame();
     }
 

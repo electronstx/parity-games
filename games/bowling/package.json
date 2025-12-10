@@ -1,0 +1,28 @@
+{
+    "name": "@parity-games/bowling",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "biome check ."
+    },
+    "dependencies": {
+        "gsap": "^3.13.0",
+        "howler": "^2.2.4",
+        "pixi.js": "^8.14.3",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "@parity-games/core": "workspace:*",
+        "@parity-games/ui": "workspace:*"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.2.4",
+        "@types/react": "^18.3.1",
+        "@types/react-dom": "^18.3.1",
+        "@vitejs/plugin-react": "^4.3.1",
+        "vite": "^5.4.0"
+    }
+}

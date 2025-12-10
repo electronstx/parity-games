@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { HUD } from './hud/hud.js';
 import { AnimationManager } from './animations/animation-manager.js';
+import { GameObjects } from './game-objects/game-objects.js';
 
 export default abstract class Scene extends PIXI.Container {
     app: PIXI.Application;
@@ -8,6 +9,7 @@ export default abstract class Scene extends PIXI.Container {
 
     protected animationManager: AnimationManager;
     protected hud: HUD;
+    protected gameObjects: GameObjects;
 
     constructor(app: PIXI.Application, scale: number) {
         super();
@@ -15,6 +17,7 @@ export default abstract class Scene extends PIXI.Container {
         this.gameScale = scale;
         this.animationManager = new AnimationManager();
         this.hud = new HUD();
+        this.gameObjects = new GameObjects();
     }
 
     abstract create(): void;
@@ -30,5 +33,6 @@ export default abstract class Scene extends PIXI.Container {
     destroy(): void {
         this.animationManager.destroy();
         this.hud.destroy();
+        this.gameObjects.destroy();
     }
 }

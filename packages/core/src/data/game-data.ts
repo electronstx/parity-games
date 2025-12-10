@@ -43,7 +43,7 @@ export default abstract class GameData {
         return lastState?.previousState;
     }
 
-    abstract getGameSettingsData(): any;
+    abstract getGameData(): any;
     abstract getRoundData(): any;
     abstract getRoundResultData(): any;   
     abstract resetData(): void;
