@@ -41,7 +41,7 @@ export const GameContainer = (props: GameContainerProps) => {
     }, []);
 
     return (
-        <div className={`game-container`}>
+        <div className="game-container">
             <div 
                 ref={containerRef} 
                 className="game-canvas"

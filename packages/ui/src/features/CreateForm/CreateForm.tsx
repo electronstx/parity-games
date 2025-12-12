@@ -1,5 +1,5 @@
 import './CreateForm.css';
-import { CreateFormProps } from './types';
+import { CreateFormProps } from './types.js';
 
 export const CreateForm = (props: CreateFormProps) => {
     return (

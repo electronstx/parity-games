@@ -8,7 +8,7 @@
     box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
 }
 
-.game-button {
+.game-button-group > .game-button {
     flex: 1;
     padding: 10px 16px;
     font-size: 14px;
@@ -24,37 +24,37 @@
     position: relative;
 }
 
-.game-button:last-child {
+.game-button-group > .game-button:last-child {
     border-right: none;
 }
 
-.game-button:hover:not(:disabled) {
+.game-button-group > .game-button:hover:not(:disabled) {
     background: rgba(227, 242, 253, 0.8);
     color: #0d47a1;
 }
 
-.game-button:active:not(:disabled) {
+.game-button-group > .game-button:active:not(:disabled) {
     background: rgba(187, 222, 251, 0.6);
 }
 
-.game-button.active {
+.game-button-group > .game-button.active {
     background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
     color: #ffffff;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
 
-.game-button.active:hover:not(:disabled) {
+.game-button-group > .game-button.active:hover:not(:disabled) {
     background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
 }
 
-.game-button:disabled {
+.game-button-group > .game-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background: rgba(255, 255, 255, 0.5);
 }
 
-.game-button.active:disabled {
+.game-button-group > .game-button.active:disabled {
     background: linear-gradient(135deg, rgba(33, 150, 243, 0.5) 0%, rgba(25, 118, 210, 0.5) 100%);
     color: rgba(255, 255, 255, 0.7);
 }
@@ -67,19 +67,19 @@
     overflow: visible;
 }
 
-.game-button-group.segmented .game-button {
+.game-button-group.segmented > .game-button {
     border: 1px solid #90caf9;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
 }
 
-.game-button-group.segmented .game-button:hover:not(:disabled) {
+.game-button-group.segmented > .game-button:hover:not(:disabled) {
     border-color: #2196f3;
     box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
     transform: translateY(-1px);
 }
 
-.game-button-group.segmented .game-button.active {
+.game-button-group.segmented > .game-button.active {
     box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
     transform: none;
 }

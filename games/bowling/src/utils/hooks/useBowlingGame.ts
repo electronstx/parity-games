@@ -13,7 +13,7 @@ export const useBowlingGame = (soundService: SoundService) => {
             gameRef.current = new BowlingGame(soundService);
         }
         return gameRef.current;
-    }, []);
+    }, [soundService]);
 
     const startGame = useCallback(async (settings: BowlingGameSettings) => {
         const game = gameRef.current;

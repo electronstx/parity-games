@@ -35,20 +35,20 @@
     color: #42a5f5;
 }
 
-.error-text {
+.create-form .error-text {
     margin-top: 4px;
     color: #d32f2f;
     font-size: 12px;
     font-weight: 500;
 }
 
-.button-group {
+.create-form .button-group {
     display: flex;
     gap: 8px;
     padding-top: 8px;
 }
 
-label {
+.create-form label {
     display: flex;
     flex-direction: column;
     font-size: 14px;
@@ -61,18 +61,20 @@ label {
     transition: all 0.2s ease;
 }
 
-label:hover {
+.create-form label:hover {
     background: rgba(255, 255, 255, 1);
     border-color: #2196f3;
     box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
 }
 
-label > span {
+.create-form label > span {
     margin-bottom: 8px;
     color: #1565c0;
 }
 
-input, select, textarea {
+.create-form input, 
+.create-form select, 
+.create-form textarea {
     padding: 8px 12px;
     border: 1px solid #90caf9;
     border-radius: 6px;
@@ -82,7 +84,9 @@ input, select, textarea {
     transition: all 0.2s ease;
 }
 
-input:focus, select:focus, textarea:focus {
+.create-form input:focus, 
+.create-form select:focus, 
+.create-form textarea:focus {
     outline: none;
     border-color: #2196f3;
     box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);

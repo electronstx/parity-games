@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ButtonGroup.css";
-import { ButtonGroupProps, Option } from "./types";
+import { ButtonGroupProps, Option } from "./types.js";
 
 export const ButtonGroup = ({
     name,

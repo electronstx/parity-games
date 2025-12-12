@@ -1,5 +1,5 @@
 import './FooterPanel.css';
-import { SOCIAL_LINKS } from './types';
+import { SOCIAL_LINKS } from './types.js';
 
 export const FooterPanel = () => {
     return (

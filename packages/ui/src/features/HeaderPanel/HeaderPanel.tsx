@@ -1,4 +1,4 @@
-import { HeaderPanelProps } from './types';
+import { HeaderPanelProps } from './types.js';
 import './HeaderPanel.css';
 
 export const HeaderPanel = (props: HeaderPanelProps) => {

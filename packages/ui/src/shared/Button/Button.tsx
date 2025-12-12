@@ -1,5 +1,5 @@
 import "./Button.css";
-import { ButtonProps } from "./types";
+import { ButtonProps } from "./types.js";
 
 export const Button = ({
     size,

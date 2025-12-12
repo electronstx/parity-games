@@ -1,6 +1,6 @@
-import { Button } from '../../shared/Button/Button';
+import { Button } from '../../shared/Button/Button.js';
 import './SoundSettings.css';
-import { SOUND_ASSETS, SoundSettingsProps } from './types';
+import { SOUND_ASSETS, SoundSettingsProps } from './types.js';
 
 export const SoundSettings = ({ 
     settings, 
