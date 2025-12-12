@@ -10,7 +10,7 @@ export class BowlingPhysicsService {
     #guideLine: GuideLine;
     #ballVelocityLoss: number = 0.05;
     #pinsSettlingDelay: number = 1500;
-    #pinsSettlingTimer: number | null = null;
+    #pinsSettlingTimer: ReturnType<typeof setTimeout> | null = null;
     #isActive: boolean = false;
     #pinsBeforeThrow: number = 0;
 
@@ -91,10 +91,6 @@ export class BowlingPhysicsService {
 
     setPinsBeforeThrow(count: number): void {
         this.#pinsBeforeThrow = count;
-    }
-
-    getPinsBeforeThrow(): number {
-        return this.#pinsBeforeThrow;
     }
 
     #cancelPinsSettlingTimer(): void {

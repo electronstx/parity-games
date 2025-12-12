@@ -122,7 +122,7 @@ export class BowlingGame implements Game {
     }
 
     #waitForRenderer(signal?: AbortSignal): Promise<void> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const checkRenderer = () => {
                 if (signal?.aborted || !this.#app) {
                     resolve();

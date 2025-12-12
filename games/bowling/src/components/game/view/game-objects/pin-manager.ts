@@ -213,10 +213,6 @@ export class PinManager implements GameObject{
         });
     }
 
-    getAllDown(): boolean {
-        return this.#pins.every(pin => pin.knockedDown);
-    }
-
     getKnockedDownCount(): number {
         return this.#pins.filter(p => p.knockedDown).length;
     }

@@ -92,6 +92,8 @@ export default class BowlingGameData extends GameData {
     }
 
     setThrowResult(pinsKnockedDown: number): void {
+        if (!Number.isInteger(pinsKnockedDown) || pinsKnockedDown < 0 || pinsKnockedDown > 10) return;
+
         this.#pinsKnockedDown = pinsKnockedDown;
         const frames = this.#currentPlayer === 1 ? this.#player1Frames : this.#player2Frames;
         const frame = frames[this.#currentFrame];

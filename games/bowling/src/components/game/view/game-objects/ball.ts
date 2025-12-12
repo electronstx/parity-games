@@ -36,6 +36,8 @@ export class Ball implements GameObject {
     launch(angle: number): void {
         if (this.#isMoving) return;
 
+        if (!Number.isFinite(angle) || Math.abs(angle) > Math.PI) return;
+
         this.#isMoving = true;
         this.#velocity = {
             x: Math.cos(angle) * this.#speed,

@@ -7,6 +7,7 @@ export default class BowlingGameflow extends Gameflow {
     #scene: IBowlingScene;
     #roundCompletedEmitted: boolean = false;
     #ballWasLaunched: boolean = false;
+    #timers: ReturnType<typeof setTimeout>[] = [];
 
     constructor(gameData: GameData, scene: IBowlingScene) {
         super(gameData, scene);
@@ -28,6 +29,8 @@ export default class BowlingGameflow extends Gameflow {
     }
 
     override startRound(): void {
+        this.#clearTimers();
+
         const gameData = this.gameData as BowlingGameData;
         const shouldResetAllPins = gameData.shouldResetAllPins();
         
@@ -55,18 +58,20 @@ export default class BowlingGameflow extends Gameflow {
                 this.scene.showRoundResult(this.gameData.getRoundResultData());
                 this.#updateScoreboard();
                 this.#scene.stopGameLoop();
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                     this.emit(GameEvents.GAME_END, endGameResult);
                 }, 2000);
+                this.#timers.push(timer);
                 return;
             }
             
             this.scene.showRoundResult(this.gameData.getRoundResultData());
             this.#updateScoreboard();
             
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 this.emit(GameEvents.ROUND_STARTED);
             }, 2000);
+            this.#timers.push(timer);
         } else {
             this.scene.showRoundResult(this.gameData.getRoundResultData());
             this.#updateScoreboard();
@@ -74,6 +79,8 @@ export default class BowlingGameflow extends Gameflow {
     }
 
     override showEndGame(result: unknown, timescale?: number): void {
+        this.#clearTimers();
+
         this.#scene.stopGameLoop();
         this.#scene.showEndGame(result, timescale);
         this.#updateScoreboard();
@@ -84,6 +91,11 @@ export default class BowlingGameflow extends Gameflow {
         this.gameData.resetData();
         this.#scene.restartGame();
         this.#updateScoreboard();
+    }
+
+    #clearTimers(): void {
+        this.#timers.forEach(timer => clearTimeout(timer));
+        this.#timers = [];
     }
 
     #updateScoreboard(): void {
@@ -130,6 +142,12 @@ export default class BowlingGameflow extends Gameflow {
     }
 
     cleanupEventHandlers(): void {
+        this.#clearTimers();
         super.cleanupEventHandlers();
+    }
+
+    override destroy(): void {
+        this.#clearTimers();
+        super.destroy();
     }
 }

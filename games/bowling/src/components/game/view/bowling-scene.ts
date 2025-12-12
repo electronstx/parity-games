@@ -189,6 +189,8 @@ export default class BowlingScene extends Scene implements IBowlingScene {
     }
 
     launchBall(angle: number): void {
+        if (!Number.isFinite(angle)) return;
+
         this.#guideLine.stopRotation();
         this.#ball.launch(angle);
         this.onBallLaunched();
